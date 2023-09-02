@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encryption-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: encryption-microservice
+  template:
+    metadata:
+      labels:
+        app: encryption-microservice
+    spec:
+      containers:
+      - name: encryption-microservice
+        image: gcr.io/my-project/encryption-microservice:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: 100m
+      nodeSelector:
+        fips: enabled
